@@ -1,33 +1,32 @@
 ﻿<?php
-// Information to be modified
-$to_email = "support@rationalizeit.us"; // email address to which the form data will be sent
-$subject = "Contact Request"; // subject of the email that is sent
-$thanks_page = "index.html"; // path to the thank you page following successful form submission
-$contact_page = "index.html"; // path to the HTML contact page where the form appears
+require 'PHPMailer/PHPMailerAutoload.php';
 
+$mail = new PHPMailer;
 
-$nam = strip_tags($_POST["contact_name"]);
-$ema = strip_tags($_POST["contact_email"]);
-$phone = strip_tags($_POST["contact_number"]);
-$com = strip_tags($_POST["contact_message"]);
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From: <' .$ema. '>' . "\r\n";
-$headers .= "Reply-To: ".$ema."\r\n";
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = 'support@rationalizeit.us';                 // SMTP username
+$mail->Password = 'rationalizeit';                           // SMTP password
+$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 587;                                    // TCP port to connect to
 
-$email_body = 
-	"<strong>From: </strong>" . $nam . "<br />
-	<strong>Email: </strong>" . $ema . "<br />	
-	<strong>Phone: </strong>" . $phone . "<br />	
-	<strong>Message: </strong>" . $com;
-	
+$mail->From = strip_tags($_POST["contact_name"]);
+$mail->FromName = strip_tags($_POST["contact_name"]);
+$mail->addAddress('support@rationalizeit.us', 'Rationalize IT Contact Us');     // Add a recipient
+$mail->isHTML(true);                                  // Set email format to HTML
+$mail->From = "faraaz@rationalizeit.us";
+$mail->FromName = "faraaz@rationalizeit.us";
 
-// Assuming there's no error, send the email and redirect to Thank You page
-	
-if( mail($to_email, $subject, $email_body, $headers) ) {	
-	echo '<i class="glyphicon glyphicon-ok"></i> Thank you ' .$nam. '. Your Email was successfully sent!';
-} else {	
-	echo '<i class="glyphicon glyphicon-remove"></i> Sorry ' .$nam. '. Your Email was not sent. Resubmit form again Please..';
+$mail->Subject = "Message from Rationalize IT Website Contact Form. Call Back at: " . strip_tags($_POST["contact_number"]);
+$mail->Body    =  strip_tags($_POST["contact_message"]);
+$mail->AltBody =  strip_tags($_POST["contact_message"]);
+
+if(!$mail->send()) {
+   	echo '<i class="glyphicon glyphicon-remove"></i> Sorry ' .$nam. '. Your Email was not sent. Resubmit form again Please..';
+} else {
+  	echo '<i class="glyphicon glyphicon-ok"></i> Thank you ' .$nam. '. Your Email was successfully sent!';
 }
 die();

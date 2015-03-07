@@ -218,7 +218,7 @@ $(window).load(function() {
 	$(function() {
 		"use strict";		
 		function initialize() {
-			var myLatlng = new google.maps.LatLng(44.5403, -78.5463);
+			var myLatlng = new google.maps.LatLng(32.608642, -97.119254);
 			var mapOptions = {
 				zoom: 8,  
 				disableDefaultUI: true,
@@ -228,10 +228,10 @@ $(window).load(function() {
 			};
 			var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 			var contentString = '<div id="map-content">'+
-			'<p>Office Names</p>'+
-			'<div> Street Name,</div>'+
-			'<div> City Name, State,</div>'+
-			'<div>Country - xxxxx </div>'
+			'<p>Rationalize IT, LLC</p>'+
+			'<div> 3251 Matlock Road, #4102,</div>'+
+			'<div> Mansfield, TX,</div>'+
+			'<div>United States of America- 76063</div>' +
 			'</div>';
 			var infowindow = new google.maps.InfoWindow({
 				content: contentString
