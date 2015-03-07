@@ -3,7 +3,7 @@ require 'PHPMailer/PHPMailerAutoload.php';
 
 $mail = new PHPMailer;
 
-//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
 $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
@@ -25,8 +25,8 @@ $mail->Body    =  strip_tags($_POST["contact_message"]);
 $mail->AltBody =  strip_tags($_POST["contact_message"]);
 
 if(!$mail->send()) {
-   	echo '<i class="glyphicon glyphicon-remove"></i> Sorry ' .$nam. '. Your Email was not sent. Resubmit form again Please..';
+   	echo '<i class="glyphicon glyphicon-remove"></i> Sorry, Your Email was not sent. Resubmit form again Please..';
 } else {
-  	echo '<i class="glyphicon glyphicon-ok"></i> Thank you ' .$nam. '. Your Email was successfully sent!';
+  	echo '<i class="glyphicon glyphicon-ok"></i> Thank you. Your Email was successfully sent!';
 }
 die();

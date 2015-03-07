@@ -1,15 +1,17 @@
 application: rationalize-it
-version: alpha
+version: alpha-1
 runtime: php
 api_version: 1
 
 handlers:
-# Serve images as static resources.
-- url: /(.+\.(html|css|js|gif|png|jpg))$
-  static_files: \1
-  upload: .+\.(gif|png|jpg)$
-  application_readable: true
+  - url: /(.+)
+    static_files: \1
+    upload: (.*)
 
-# Serve php scripts.
-- url: /(.+\.php)$
-  script: \1
+  - url: /
+    static_files: ./index.html
+    upload: ./index.html
+
+  - url: /(.+\.php)$
+    script: \1
+
